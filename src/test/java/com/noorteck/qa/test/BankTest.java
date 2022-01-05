@@ -1,5 +1,7 @@
 package com.noorteck.qa.test;
 
+import org.testng.asserts.SoftAssert;
+
 import com.noorteck.qa.pages.HomePage;
 import com.noorteck.qa.pages.LoansPage;
 import com.noorteck.qa.pages.TransferPage;
@@ -8,49 +10,54 @@ import com.noorteck.qa.utils.ObjInitialize;
 
 public class BankTest extends ObjInitialize {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
-		String url = "http://demo.automationtesting.in/Register.html";
+		String url = "https://usdemo.vee24.com/#/transactions";
 
-		CommonUI commonUIObj = new CommonUI();
-		ObjInitialize obj = new ObjInitialize();
-		BankTest testobj = new BankTest();
-		HomePage homeObj = new HomePage();
-		TransferPage transferObj = new TransferPage();
-		LoansPage loansObj = new LoansPage();
+		// CommonUI commonUIObj = new CommonUI();
+		// ObjInitialize obj = new ObjInitialize();
+		// BankTest testobj = new BankTest();
+		// HomePage homeObj = new HomePage();
+		// TransferPage transferObj = new TransferPage();
+		// LoansPage loansObj = new LoansPage();
 
-		commonUIObj.openBrowser("chrome"); // open the browser
-		commonUIObj.navigate(url); // navigate to the URL
-
-		testobj.BankTestOne();
-		commonUIObj.quitBrowser(); // close the browser
+		CommonUI.openBrowser("chrome"); // open the browser
+		CommonUI.navigate(url); // navigate to the URL
+		initializeClassObj();
+		BankTestOne();
+		BankTestTwo();
+		// testobj.BankTestOne();
+		CommonUI.quitBrowser(); // close the browser
 	}
 
-	public void BankTestOne() {
-		transferObj.clickTransferFunds();
-		transferObj.selectFromoriginAccount("Value", "RainyDay");
-		transferObj.SelectDestinationAccount("Value", "Investing");
+	public static void BankTestOne() {
+		HomePage homeObj = new HomePage();
+		SoftAssert softAssert = new SoftAssert();
+
+		homeObj.clickTransfer();
+		// transferObj.selectFromOriginAccount();
+		// transferObj.clickOriginAccount();
+	   // transferObj.SelectDestinationAccount("Value", "Investing");
+		// transferObj.clickDestinationAccount();
 		transferObj.enterAmount("1000");
 		transferObj.enterSsNumber("1234567");
 		transferObj.enteratmPin("1235");
 		transferObj.clickTransferFunds();
-
+		String actualText = driver.getTitle();
 		String expectedText = "Success! Funds successfully transferred.”";
-		String actualText = "Success! Funds successfully transferred.”";
-		if (actualText.contains(expectedText)) {
-			System.out.println("Text verified");
-		} else {
-			System.out.println("wrong Test");
-		}
+		softAssert.assertEquals(expectedText, actualText);
+		
 	}
 
-	public void BankTestTwo() {
-		// HomePage homeObj = new HomePage();
+	public static void BankTestTwo() throws InterruptedException {
+		HomePage homeObj = new HomePage();
+		SoftAssert softAssert = new SoftAssert();
 
-		homeObj.clickLoan();
+		homeObj.clickLoans();
 		loansObj.enterName("John Cena");
 		loansObj.enterAddress("123 java drive");
-		loansObj.selectFromDropDown("Value", "Retirement");
+       //loansObj.selectFromDropDown("Value", "Retirement");
+	
 		loansObj.enterYearsToRepayLoan("2");
 		loansObj.clickNext();
 		loansObj.enterAmount("5000");

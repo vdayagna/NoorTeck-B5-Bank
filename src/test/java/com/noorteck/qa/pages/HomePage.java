@@ -10,11 +10,11 @@ public class HomePage extends CommonUI{
 	
 	
 	
-	@FindBy(xpath = "//*[text() = 'Transfer']")
+	@FindBy(xpath = "//a[@class='ng-star-inserted']//span[@class='label'][normalize-space()='Transfer']")
 	WebElement clickTransfer;
 	
-	@FindBy(xpath = "//*[text() = 'Loans']")
-	WebElement clickLoan;
+	@FindBy(xpath ="//a[@class='ng-star-inserted']//span[@class='label'][normalize-space()='Loans']")
+	WebElement clickLoans;
 	
 	@FindBy(xpath = "//*[text() = 'LogOut']")
 	WebElement clickLogOut;
@@ -25,8 +25,8 @@ public class HomePage extends CommonUI{
 	public void clickTransfer() {
 		click(clickTransfer);
 	}
-	public void clickLoan() {
-		click(clickLoan);
+	public void clickLoans() {
+		click(clickLoans);
 	}
 	public void clickLogOut() {
 		click(clickLogOut);
